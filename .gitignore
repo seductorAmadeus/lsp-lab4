@@ -1,0 +1,16 @@
+# Object files
+
+*.o
+
+*.obj
+
+# Directories
+.idea/
+build/*
+
+# Others
+
+
+*.txt
+
+*.pdf
