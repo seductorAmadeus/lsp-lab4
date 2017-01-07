@@ -7,6 +7,7 @@
 # Directories
 .idea/
 build/*
+examples/*
 
 # Others
 
