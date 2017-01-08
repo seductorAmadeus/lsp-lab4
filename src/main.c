@@ -42,7 +42,7 @@ int main()
 
     foundValue = list_get(variantNumber, list);
 
-    if (foundValue != NULL)
+    if (NULL != foundValue)
     {
         printf("list_get(%d) = %d\n", variantNumber, foundValue);
     } else
@@ -58,10 +58,7 @@ int main()
 void list_add_back(int number, llist_t *list)
 {
     llist_t *newList;
-    while (NULL != list->next)
-    {
-        list = list->next;
-    }
+    list = list_node_at(list, list_length(list) - 1);
     newList = malloc(sizeof(llist_t));
     newList->value = number;
     newList->next = NULL;
@@ -92,7 +89,10 @@ int list_get(int index, llist_t *list)
     } else if ((list = list_node_at(list, index)) != NULL)
     {
         return list->value;
-    } else return NULL;
+    } else
+    {
+        return NULL;
+    }
 }
 
 long list_sum(llist_t *list)
