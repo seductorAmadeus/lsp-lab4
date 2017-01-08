@@ -47,9 +47,24 @@ int main()
         printf("value is missing, because the list is not long enough:\n list_length = %d\n", list_length(list));
     }
 
+    list_add_back(85, list);
+
     list_free(list);
 
     return 0;
+}
+
+void list_add_back(int number, llist_t *list)
+{
+    llist_t *newList;
+    while (NULL != list->next)
+    {
+        list = list->next;
+    }
+    newList = malloc(sizeof(llist_t));
+    newList->value = number;
+    newList->next = NULL;
+    list->next = newList;
 }
 
 int list_get(int index, llist_t *list)
