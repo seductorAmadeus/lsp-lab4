@@ -9,19 +9,19 @@ typedef struct llist_t
 
 long list_sum(llist_t *list);
 
-llist_t *list_add_front(int number, llist_t **head);
+llist_t *list_add_front(int, llist_t **);
 
-llist_t *list_create(int number);
+llist_t *list_create(int);
 
-int list_length(llist_t *list);
+int list_length(llist_t *);
 
-int list_get(int index, llist_t *list);
+int list_get(int, llist_t *);
 
-void list_add_back(int number, llist_t *llist);
+void list_add_back(int, llist_t *);
 
-void list_free(llist_t *llist);
+void list_free(llist_t *);
 
-llist_t *list_node_at(llist_t llist, int index);
+llist_t *list_node_at(llist_t *, int);
 
 int main()
 {
@@ -37,8 +37,11 @@ int main()
             list = list_add_front(scanValue, &list);
         }
     }
+
     printf("sum of elements in the list: %ld\n", list_sum(list));
+
     foundValue = list_get(variantNumber, list);
+
     if (foundValue != NULL)
     {
         printf("list_get(%d) = %d\n", variantNumber, foundValue);
@@ -46,8 +49,6 @@ int main()
     {
         printf("value is missing, because the list is not long enough:\n list_length = %d\n", list_length(list));
     }
-
-    list_add_back(85, list);
 
     list_free(list);
 
@@ -67,18 +68,31 @@ void list_add_back(int number, llist_t *list)
     list->next = newList;
 }
 
-int list_get(int index, llist_t *list)
+llist_t *list_node_at(llist_t *list, int index)
 {
     int i;
-    if (index > list_length(list))
-    {
-        return NULL;
-    }
-    for (i = 1; i < index; i++)
+    for (i = 0; (i < index) && (list->next != NULL); i++)
     {
         list = list->next;
     }
-    return list->value;
+    if (i == index)
+    {
+        return list;
+    } else
+    {
+        return NULL;
+    }
+}
+
+int list_get(int index, llist_t *list)
+{
+    if (index > list_length(list))
+    {
+        return NULL;
+    } else if ((list = list_node_at(list, index)) != NULL)
+    {
+        return list->value;
+    } else return NULL;
 }
 
 long list_sum(llist_t *list)
