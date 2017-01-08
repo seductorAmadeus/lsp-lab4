@@ -15,9 +15,9 @@ llist_t *list_create(int number);
 
 int list_length(llist_t *list);
 
-void list_add_back(int number, llist_t *llist);
+int list_get(int index, llist_t *list);
 
-int list_get(int i);
+void list_add_back(int number, llist_t *llist);
 
 void list_free(llist_t *llist);
 
@@ -25,7 +25,7 @@ llist_t *list_node_at(llist_t llist, int index);
 
 int main()
 {
-    int scanValue;
+    int scanValue, variantNumber = 16, foundValue;
     llist_t *list = NULL;
     while (scanf("%d", &scanValue) != EOF)
     {
@@ -37,9 +37,30 @@ int main()
             list = list_add_front(scanValue, &list);
         }
     }
-    printf("%ld\n", list_sum(list));
-    printf("length of list = %d\n", list_length(list));
+    printf("sum of elements in the list: %ld\n", list_sum(list));
+    foundValue = list_get(variantNumber, list);
+    if (foundValue != NULL)
+    {
+        printf("list_get(%d) = %d\n", variantNumber, foundValue);
+    } else
+    {
+        printf("value is missing, because the list is not long enough:\n list_length = %d\n", list_length(list));
+    }
     return 0;
+}
+
+int list_get(int index, llist_t *list)
+{
+    int i;
+    if (index > list_length(list))
+    {
+        return NULL;
+    }
+    for (i = 1; i < index; i++)
+    {
+        list = list->next;
+    }
+    return list->value;
 }
 
 long list_sum(llist_t *list)
