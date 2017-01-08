@@ -46,6 +46,9 @@ int main()
     {
         printf("value is missing, because the list is not long enough:\n list_length = %d\n", list_length(list));
     }
+
+    list_free(list);
+
     return 0;
 }
 
@@ -100,4 +103,16 @@ int list_length(llist_t *list)
         list = list->next;
     }
     return list_length;
+}
+
+void list_free(llist_t *list)
+{
+    llist_t *next;
+    if (NULL == list) return;
+    for (; list->next; list = next)
+    {
+        next = list->next;
+        free(list);
+    }
+    free(list);
 }
