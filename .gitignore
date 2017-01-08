@@ -7,12 +7,9 @@
 # Directories
 .idea/
 build/*
-examples/*
+others/*
 
 # Others
-
-
 *.txt
-
 *.pdf
 main
