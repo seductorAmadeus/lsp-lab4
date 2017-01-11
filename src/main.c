@@ -32,26 +32,23 @@ int main()
         if (NULL == list)
         {
             list = list_create(scanValue);
-        } else
+        }
+        else
         {
             list = list_add_front(scanValue, &list);
         }
     }
-
     printf("sum of elements in the list: %ld\n", list_sum(list));
-
     foundValue = list_get(variantNumber, list);
-
     if (NULL != foundValue)
     {
         printf("list_get(%d) = %d\n", variantNumber, foundValue);
-    } else
+    }
+    else
     {
         printf("value is missing, because the list is not long enough:\n list_length = %d\n", list_length(list));
     }
-
     list_free(list);
-
     return 0;
 }
 
@@ -75,7 +72,8 @@ llist_t *list_node_at(llist_t *list, int index)
     if (i == index)
     {
         return list;
-    } else
+    }
+    else
     {
         return NULL;
     }
@@ -86,10 +84,12 @@ int list_get(int index, llist_t *list)
     if (index > list_length(list))
     {
         return NULL;
-    } else if ((list = list_node_at(list, index)) != NULL)
+    }
+    else if ((list = list_node_at(list, index)) != NULL)
     {
         return list->value;
-    } else
+    }
+    else
     {
         return NULL;
     }
