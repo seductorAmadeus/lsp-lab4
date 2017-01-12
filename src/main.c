@@ -23,6 +23,14 @@ void list_free(llist_t *);
 
 llist_t *list_node_at(llist_t *, int);
 
+void merge(llist_t *, llist_t *, llist_t **);
+
+void mergeSort(llist_t **);
+
+void split(llist_t *, llist_t **, llist_t **);
+
+void print_list(llist_t **);
+
 int main()
 {
     int scanValue, variantNumber = 16, foundValue;
@@ -39,6 +47,12 @@ int main()
         }
     }
     printf("sum of elements in the list: %ld\n", list_sum(list));
+
+    // task: merge sort;
+    mergeSort(&list);
+    printf("list was sorted!\n");
+    print_list(&list);
+
     foundValue = list_get(variantNumber, list);
     if (NULL != foundValue)
     {
@@ -50,6 +64,120 @@ int main()
     }
     list_free(list);
     return 0;
+}
+
+void mergeSort(llist_t **head)
+{
+    llist_t *low = NULL;
+    llist_t *high = NULL;
+    if ((*head == NULL) || ((*head)->next == NULL))
+    {
+        return;
+    }
+    split(*head, &low, &high);
+    mergeSort(&low);
+    mergeSort(&high);
+    merge(low, high, head);
+}
+
+void print_list(llist_t **head)
+{
+    if (((*head)->next == NULL) || (*head == NULL))
+    {
+        return;
+    }
+    while ((*head) != NULL)
+    {
+        printf("%d\n", (*head)->value);
+        *head = (*head)->next;
+    }
+    printf("\n");
+}
+
+void merge(llist_t *a, llist_t *b, llist_t **c)
+{
+    llist_t tmp;
+    *c = NULL;
+    if (a == NULL)
+    {
+        *c = b;
+        return;
+    }
+    if (b == NULL)
+    {
+        *c = a;
+        return;
+    }
+    if (a->value < b->value)
+    {
+        *c = a;
+        a = a->next;
+    }
+    else
+    {
+        *c = b;
+        b = b->next;
+    }
+    tmp.next = *c;
+    while (a && b)
+    {
+        if (a->value < b->value)
+        {
+            (*c)->next = a;
+            a = a->next;
+        }
+        else
+        {
+            (*c)->next = b;
+            b = b->next;
+        }
+        (*c) = (*c)->next;
+    }
+    if (a)
+    {
+        while (a)
+        {
+            (*c)->next = a;
+            (*c) = (*c)->next;
+            a = a->next;
+        }
+    }
+    if (b)
+    {
+        while (b)
+        {
+            (*c)->next = b;
+            (*c) = (*c)->next;
+            b = b->next;
+        }
+    }
+    *c = tmp.next;
+}
+
+void split(llist_t *src, llist_t **low, llist_t **high)
+{
+    llist_t *fast = NULL;
+    llist_t *slow = NULL;
+    if (src == NULL || src->next == NULL)
+    {
+        (*low) = src;
+        (*high) = NULL;
+        return;
+    }
+    slow = src;
+    fast = src->next;
+    while (fast != NULL)
+    {
+        fast = fast->next;
+        if (fast != NULL)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+    }
+    (*low) = src;
+    (*high) = slow->next;
+    slow->next = NULL;
 }
 
 void list_add_back(int number, llist_t *list)
