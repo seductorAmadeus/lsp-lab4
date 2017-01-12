@@ -54,7 +54,7 @@ int main()
     print_list(&list);
 
     foundValue = list_get(variantNumber, list);
-    if (NULL != foundValue)
+    if (0 != foundValue)
     {
         printf("list_get(%d) = %d\n", variantNumber, foundValue);
     }
