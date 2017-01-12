@@ -48,20 +48,15 @@ int main()
     }
     printf("sum of elements in the list: %ld\n", list_sum(list));
 
+    foundValue = list_get(variantNumber, list);
+    foundValue != NULL ? printf("list_get(%d) = %d\n", variantNumber, foundValue)
+                       : printf("value is missing, because the list is not long enough:\n list_length = %d\n", list_length(list));
+
     /* task: merge sort; */
     mergeSort(&list);
     printf("list was sorted!\n");
     print_list(&list);
 
-    foundValue = list_get(variantNumber, list);
-    if (0 != foundValue)
-    {
-        printf("list_get(%d) = %d\n", variantNumber, foundValue);
-    }
-    else
-    {
-        printf("value is missing, because the list is not long enough:\n list_length = %d\n", list_length(list));
-    }
     list_free(list);
     return 0;
 }
