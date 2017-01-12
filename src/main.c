@@ -48,7 +48,7 @@ int main()
     }
     printf("sum of elements in the list: %ld\n", list_sum(list));
 
-    // task: merge sort;
+    /* task: merge sort; */
     mergeSort(&list);
     printf("list was sorted!\n");
     print_list(&list);
